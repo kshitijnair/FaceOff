@@ -1,0 +1,129 @@
+.main {
+  width: 600px;
+  height: 600px;
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 32px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+#canvases {
+  margin: 1em auto auto auto;
+}
+
+#faceLogo {
+  height: 3em;
+  text-align: center;
+}
+
+#masks {
+  margin: 1em auto auto auto;
+  width: 400px;
+  height: 90px;
+  display: flex;
+  justify-content: space-evenly;
+}
+#masks > div {
+  width: 90px;
+  border-radius: 45px;
+}
+#masks > div > img {
+  width: 90px;
+  height: 90px;
+}
+#iconimage {
+  padding: 10px;
+  border-radius: 30px;
+  margin: auto;
+}
+
+.selected-mask {
+  box-shadow: 0 4px 8px 0 rgba(0, 139, 139, 0.3),
+    0 6px 20px 0 rgb(0, 139, 139, 0.25);
+}
+
+#controls {
+  margin: 2em auto auto auto;
+  width: 400px;
+  display: flex;
+  justify-content: space-evenly;
+}
+.button {
+  flex-direction: column;
+  width: 60px;
+  height: 60px;
+  margin: 5px;
+  border-radius: 30px;
+}
+.button > img {
+  width: 60px;
+  height: 60px;
+  margin: auto;
+  padding: 15px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+}
+.handBtn-pressed {
+  background-color: cadetblue;
+}
+
+#recordBtn {
+  background-color: rgb(0, 139, 139);
+}
+
+#svg {
+  position: absolute;
+}
+canvas {
+  position: absolute;
+}
+img {
+  position: absolute;
+}
+
+/* #randoCanvas {
+  border: 0px solid blue;
+}
+#handCanvas {
+  border: 0px solid green;
+} */
+
+.maskON {
+  display: block !important;
+}
+
+.maskOFF {
+  display: none;
+}
+
+#welcome {
+  margin-top: 550px;
+}
+
+#loading {
+  position: fixed;
+  top: 200px;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+#startbtn {
+  background-color: rgb(59, 194, 59);
+}
+
+#stopbtn {
+  background-color: grey;
+}
+
+/* .stack {
+  border: 3px solid green;
+} */

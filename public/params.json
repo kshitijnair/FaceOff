@@ -1,0 +1,23 @@
+{
+    "yellowFace": {
+        "heightFactor" : 2,
+        "widthFactor": 1.65,
+        "maskRight": 0.95,
+        "maskTopDiv": 1.45,
+        "noseFactor": 1
+    },
+    "owl":{
+        "heightFactor" : 2,
+        "widthFactor": 1.45,
+        "maskRight": 0.95,
+        "maskTopDiv": 1.45,
+        "noseFactor": 1
+    },
+    "blueMask":{
+        "heightFactor" : 2,
+        "widthFactor": 1.75,
+        "maskRight": 0.95,
+        "maskTopDiv": 1.32,
+        "noseFactor": 1
+    }
+}

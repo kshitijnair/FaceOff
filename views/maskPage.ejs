@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <link rel="icon" href="/deeptechvision-favicon.png" />
+  <link rel="stylesheet" href="/styles/maskPage.css" />
+  <script
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/holistic@0.3.1620080860/holistic.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils@0.3.1620080201/drawing_utils.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1620080164/camera_utils.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils@0.3.1620080185/control_utils.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <body>
+    <video id="inputVideo" autoplay style="display: none" ></video><br />
+    <canvas
+      class="drawCanvas"
+      width="960px"
+      X-UA-Compatible
+      height="540px"
+      id="randoCanvas"
+    ></canvas>
+
+    <img id="facemask" class="maskOFF" src="./owl.svg" alt="" style="display: none !important"/>
+    
+    <svg id="svg" width="960px" height="540px">
+      <ellipse
+        id="Leye"
+        cx="40px"
+        cy="40px"
+        rx="8"
+        ry="10"
+        class="eye"
+        fill="blue"
+      />
+      <ellipse
+        id="LEBall"
+        cx="40px"
+        cy="40px"
+        rx="8"
+        ry="10"
+        class="eye"
+        fill="black"
+      />
+      <ellipse
+        id="Reye"
+        cx="90px"
+        cy="40px"
+        rx="8"
+        ry="10"
+        class="eye"
+        fill="blue"
+      />
+      <ellipse
+        id="REBall"
+        cx="40px"
+        cy="40px"
+        rx="8"
+        ry="10"
+        class="eye"
+        fill="black"
+      />
+      <ellipse id="LCheek" cx="90px " cy="40px" rx="8" ry="10" fill="red" />
+      <ellipse id="RCheek" cx="90px " cy="40px" rx="8" ry="10" fill="red" />
+      <path
+        id="upLip"
+        d=" M 10 80 Q 40 30 70 80"
+        stroke="red"
+        stroke-width="3"
+        fill="pink"
+      />
+      <path
+        id="lowLip"
+        d="M 10 80 Q 40 120 70 80"
+        stroke="red"
+        stroke-width="3"
+        fill="pink"
+      />
+      <path
+        id="leftCheek"
+        d="M 10 100 Q 40 30 70 100"
+        stroke="x#C0C0C0	"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="rightCheek"
+        d="M 10 100 Q 40 30 70 100"
+        stroke="#C0C0C0	"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="lineNose"
+        d="M 10 100 Q 40 30 70 100"
+        stroke="brown"
+        stroke-width="4"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="REDnose"
+        stroke="black"
+        stroke-width="5"
+        stroke-linecap="round"
+        fill="red"
+        d="M 100 100 q 25 -5 50 0   10 10 -25 25   -35 -15 -25 -25"
+      />
+      <path
+        id="leftBrow"
+        d="M 20 200 Q 40 30 80 100"
+        stroke="black"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="rightBrow"
+        d="M 20 200 Q 40 30 80 100"
+        stroke="black"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="leftExp1"
+        d="M 20 200 Q 40 30 80 100"
+        stroke="#C0C0C0	"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+      <path
+        id="rightExp1"
+        d="M 20 200 Q 40 30 80 100"
+        stroke="#C0C0C0	"
+        stroke-width="3"
+        stroke-linecap="round"
+        fill="transparent"
+      />
+    </svg>
+
+    <canvas       
+      id="handCanvas"
+      width="960px"
+      X-UA-Compatible
+      height="540px"
+    ></canvas>
+
+    <canvas id="finalCanvas"
+      style="margin-top: 500px; display: none;"
+      width="960px"
+      X-UA-Compatible
+      height="540px"
+    ></canvas>
+
+    <div id="welcome">
+      <h1 style="margin-bottom: 0;">Welcome to your dashboard, <%= user %>!</h1>
+      <%- include('logout-partial.ejs') %>
+      <h2 id="loading">Loading the model...</h2>
+      <div class="row">
+        <form action="" id="faceForm" class="column">
+          <fieldset>
+            <input type="radio" id="owl" name="character" value="owl"/>
+            <label for="owl">Owl</label
+            ><input type="radio" id="yellowFace" name="character" value="yellowFace"/>
+            <label for="yellowFace">Yellow Face</label>
+            <input type="radio" id="blueMask" name="character" value="blueMask"/>
+            <label for="blueMask">Blue Mask</label>
+            <br><input type="checkbox" name="hands" id="handscheck">
+            <label for="handscheck">Hands</label>
+            <input style="margin-left: 120px;" type="button" id="btn" value="Change"></input>
+          </fieldset>
+        </form>
+        <div class="column">
+          <button id="startbtn">Start Recording</button><br>
+          <button id="stopbtn">Stop & Save</button>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- <script src="/js/maskScript.js"></script> -->
+  <script src="/js/record.js"></script>
+</html>

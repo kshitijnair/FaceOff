@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="google-signin-client_id"
+      content="436174299251-lqthicfkr3idl5cjku1kgftnp3tbk5nq.apps.googleusercontent.com"
+    />
+    <title>FaceMask Login</title>
+    <style>
+      @font-face {
+        font-family: "Maiandra GD";
+        src: url("fonts/Maiandra GD V2.woff") format("woff"),
+          url("fonts/Maiandra GD V2.woff2") format("woff2"),
+          url("fonts/RimouskiSb-Regular.woff") format("woff");
+        font-weight: normal;
+        font-style: normal;
+      }
+    </style>
+    <link rel="stylesheet" href="/styles/login.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+  </head>
+  <body>
+    <div class="main">
+      <div id="faceLogo">faceoff logo goes here <img src="" alt="" /></div>
+      <h3 id="tagline">
+        Record videos with AR face filters and secure your identity
+      </h3>
+      <div id="faceLogo">
+        deepvisiontech logo goes here <img src="" alt="" />
+      </div>
+      <div id="loginTab">
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    function onSignIn(googleUser) {
+      var id_token = googleUser.getAuthResponse().id_token;
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/");
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onload = () => {
+        console.log("Signed in as: " + xhr.responseText);
+        if (xhr.responseText === "success") {
+          signOut();
+          location.assign("/mask");
+        }
+      };
+      xhr.send(JSON.stringify({ token: id_token }));
+    }
+
+    function signOut() {
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log("User signed out.");
+      });
+    }
+    let x = "Total Width: " + screen.width;
+    console.log(x);
+  </script>
+</html>
